@@ -40,28 +40,15 @@ class ViewController: UIViewController {
     
     private func play(repeats: Int, strategy: Strategy?) -> Int {
         var winsCount = 0
-        
+        let doorsCount = 3
+
         for _ in 0..<repeats {
-            let doorsCount = 3
-            let winDoor = Int(arc4random_uniform(UInt32(doorsCount)))
-            var playerChoice = Int(arc4random_uniform(UInt32(doorsCount)))
-            
-            if strategy == Strategy.change {
-                if playerChoice == winDoor {
-                    var doors = [0, 1, 2]
-                    doors.remove(at: playerChoice)
-                    playerChoice = doors[Int(arc4random_uniform(UInt32(doorsCount - 1)))]
-                } else {
-                    playerChoice = winDoor
-                }
-            }
-            
-            if playerChoice == winDoor {
+            if Int(arc4random_uniform(UInt32(doorsCount))) == Int(arc4random_uniform(UInt32(doorsCount))) {
                 winsCount += 1
             }
         }
 
-        return winsCount
+        return strategy == .change ? repeats - winsCount : winsCount
     }
 }
 
